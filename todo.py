@@ -1,62 +1,201 @@
 #  CODE BY BOTGODJAY
 
+import os
+
+tasks_final = []
+
 print("=== TO-DO LIST APP ===")
 
 # Implementing user input validation
 try:
   user_choice = int(input('''
   1. Create Task
-  2. View glob_task
-  3. Update Task
+  2. View Task
+  3. Add Task
   4. Delete Task
-  5. End Program
 
-  ==> '''))
+======================
+
+==> '''))
 except ValueError:
-  print("Wrong input. Program ended.")
+  print("Invalid input. Program end.")
 
-glob_task = []
+# (Create Task)
 
-# We define a function to easily loop through the 'glob_task' list and print out each items in it
-def print_task():
-    print("==== YOUR TASKS ====\n")
-
-    for task in range(len(glob_task)):
-      bullet = task + 1
-      print(f"{bullet}.", glob_task[task].strip().title())
-
-    print("\n====================\n")
-
-# (Creating Task) Logic
 if user_choice == 1:
-  try:    
-    user_input_task = str(input("\nWrite out your task. You can specify more than one task separated by a comma (,)\n==> "))
+  try:
+    print("\nWARNING!: Creating new task will overwrite previous ones if it already exits. Use 'Add Task' instead.\nThis operation cannot be reversed!")
+    intent_create = str(input("Do you want to continue?\n\nYES (y) or NO (n)\n\n==> ")).lower()
 
+    if intent_create == "yes" or intent_create == "y":
+      task_intake = str(input("\nWrite out your task. You can specify more than one task separated by a comma (,)\n==> ")).strip()
+
+      if task_intake == "":
+        print("Your input is EMPTY!")
+      
+      else:
+        with open("file.txt", "w") as file:
+          file.write(task_intake)
+        
+        with open("file.txt", "r") as file:
+          data = file.read()
+        saved_data = data.split(",")
+
+        print("\nTasks created successfully!\n\n===== YOUR TASKS =====\n")
+        for task in range(len(saved_data)):
+          bullet = task + 1
+          print(f"{bullet}.", saved_data[task].strip().title())
+        print("\n======================\n")
+
+    elif intent_create == "no" or intent_create == "n":
+      print("\nOperation cancelled!")
+    
+    else:
+      print("\nInvalid input. Program end")
+    
   except ValueError:
-    print("Invalid input. Program ended.")
-  
-  glob_task = user_input_task.split(',')
+    print("Invalid input!\nProgram end")
 
-  glob_task.extend(glob_task)
+# (View Tasks)
 
-  for task in range(len(glob_task)):
-    isNullList = glob_task[task].strip()
-
-  # Handling empty input from the user
-  if len(isNullList) == 0:
-    print("\nYou did not enter a value!\n")
-
-  else:
-    print_task()
-
-# (Viewing Task) Logic
 elif user_choice == 2:
+  if not os.path.exists("file.txt"):
+    print("\nFile does not exist...\n\nNo Tasks to view...\n\nProgram end\n")
   
-  for task in range(len(glob_task)):
-    glob_task[task].strip()
-  
-  if len(glob_task) == 0:
-    print("\nNo task created yet.\n")
+  else:
+    with open("file.txt", "r") as file:
+      data = file.read()
+    
+    if data.strip() == "":
+      print("\nTasks opened successfully!\n\n===== YOUR TASKS =====\n")
+      print("No task have been created yet!\n\n======================\n")
+
+    else:
+      with open("file.txt", "r") as file:
+        data = file.read()
+      saved_data = data.split(",")
+
+      print("\nTasks opened successfully!\n\n===== YOUR TASKS =====\n")
+      for task in range(len(saved_data)):
+        bullet = task + 1
+        print(f"{bullet}.", saved_data[task].strip().title())
+      print("\n======================\n")
+
+# (Add Task)
+
+elif user_choice == 3:
+  if not os.path.exists("file.txt"):
+    print("\nFile does not exist...\n\nCreate a new Task first...\n\nProgram end\n")
 
   else:
-    print_task()
+    with open("file.txt", "r") as file:
+      data = file.read()
+    saved_data = data.split(",")
+
+    try:
+      new_intake = str(input("\nWrite out your task. You can specify more than one task separated by a comma (,)\n==> ")).strip()
+
+      if new_intake == "":
+          print("Your input is EMPTY!")
+        
+      else:
+        with open("file.txt", "a") as file:
+          file.write(f",{new_intake}")
+        
+        with open("file.txt", "r") as file:
+          data = file.read()
+        saved_data = data.split(",")
+
+        print("\nTasks added successfully!\n\n===== YOUR TASKS =====\n")
+        for task in range(len(saved_data)):
+          bullet = task + 1
+          print(f"{bullet}.", saved_data[task].strip().title())
+        print("\n======================\n")
+    
+    except ValueError:
+      print("Invalid input!\nProgram end")
+
+# (Delete Task)
+
+elif user_choice == 4:
+  if not os.path.exists("file.txt"):
+    print("\nFile does not exist!\nProgram end\n")
+
+  else:
+    print('''
+\n===== PICK AN OPTION =====
+
+1. Delete All Tasks
+2. Delete Task by Index
+          
+==========================
+  ''')
+
+    delete_option = int(input("==> "))
+
+    if delete_option == 1:
+      validate_option = str(input("\nWARNING!: This operation cannot be reversed!\nDo you want to continue?\nYES (y) or NO (n)\n\n==> ")).lower()
+
+      if validate_option == "yes" or validate_option == "y":
+        print("\nDeleting 'file.txt'...")
+        os.remove("file.txt")
+        print("Operation completed successfully!\n")
+
+      elif validate_option == "no" or validate_option == "n":
+        print("Operation cancelled!\n")
+
+      else:
+        print("Invalid input\nTasks not deleted!\n\nProgram end\n")
+
+    elif delete_option == 2:
+      with open("file.txt", "r") as file:
+        data = file.read()
+      saved_data = data.split(",")
+
+      print("\n=| ID | == | TASK |=======\n")
+     
+      for task in range(len(saved_data)):
+        bullet = task + 1
+        print(f"{bullet}.", saved_data[task].strip().title())
+      print("\n===========================\n")
+      
+      get_index = int(input("Enter the #id of the task you wish to delete\n\n==> "))
+
+      validate_option = str(input("WARNING!: This operation cannot be reversed!\nDo you want to continue?\nYES (y) or NO (n)\n\n==> ")).lower()
+
+      if validate_option == "yes" or validate_option == "y":
+        print("\nLocating task...\nTask located...\nDeleting...")
+        with open("file.txt", "r+") as file:
+          data = file.read()
+        saved_data = data.split(",")
+
+        index = get_index - 1
+        tasks = saved_data[:index] + saved_data[index+1:]
+        notice = saved_data.pop(index).strip()
+
+        # saved_data.remove(saved_data[get_index])
+
+        stringify_saved_data = ",".join(saved_data)
+
+        with open("file.txt", "w") as file:
+          file.write(stringify_saved_data)
+        print(f"\nTASK:'{notice.upper()}' has been deleted successfully\n\nUpdating tasks...\n\n")
+
+        with open("file.txt", "r") as file:
+          data = file.read()
+        saved_data = data.split(",")
+
+        print("\n===== YOUR TASKS =====\n")
+        for task in range(len(saved_data)):
+          bullet = task + 1
+          print(f"{bullet}.", saved_data[task].strip().title())
+        print("\n======================\n")
+
+      elif validate_option == "no" or validate_option == "n":
+        print("Operation cancelled!")
+
+      else:
+        print("Invalid input\nTask not deleted!\n\nProgram end")
+    
+    else:
+      print("Invalid input!\nProgram end")
