@@ -27,11 +27,6 @@ def print_task():
 
     print("\n====================\n")
 
-# Iterating over all items in the list (express purpose of checking for empty input)
-def null_checker():
-  for task in range(len(glob_task)):
-    return glob_task[task].strip()
-
 # (Creating Task) Logic
 if user_choice == 1:
   try:    
@@ -44,8 +39,11 @@ if user_choice == 1:
 
   glob_task.extend(glob_task)
 
+  for task in range(len(glob_task)):
+    isNullList = glob_task[task].strip()
+
   # Handling empty input from the user
-  if len(null_checker()) == 0:
+  if len(isNullList) == 0:
     print("\nYou did not enter a value!\n")
 
   else:
@@ -55,7 +53,7 @@ if user_choice == 1:
 elif user_choice == 2:
   
   for task in range(len(glob_task)):
-    glob_task = glob_task[task].strip()
+    glob_task[task].strip()
   
   if len(glob_task) == 0:
     print("\nNo task created yet.\n")
