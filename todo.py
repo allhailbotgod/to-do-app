@@ -161,7 +161,7 @@ elif user_choice == 4:
       
       get_index = int(input("Enter the #id of the task you wish to delete\n\n==> "))
 
-      validate_option = str(input("WARNING!: This operation cannot be reversed!\nDo you want to continue?\nYES (y) or NO (n)\n\n==> ")).lower()
+      validate_option = str(input("\nWARNING!: This operation cannot be reversed!\nDo you want to continue?\nYES (y) or NO (n)\n\n==> ")).lower()
 
       if validate_option == "yes" or validate_option == "y":
         print("\nLocating task...\nTask located...\nDeleting...")
@@ -179,7 +179,7 @@ elif user_choice == 4:
 
         with open("file.txt", "w") as file:
           file.write(stringify_saved_data)
-        print(f"\nTASK:'{notice.upper()}' has been deleted successfully\n\nUpdating tasks...\n\n")
+        print(f"\nTASK:'{notice.upper()}' has been deleted successfully\n\nUpdating tasks...")
 
         with open("file.txt", "r") as file:
           data = file.read()
