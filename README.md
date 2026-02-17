@@ -5,7 +5,7 @@ This is a simple command-line To-Do List application built with python. It allow
 The goal of this project is to practice core Python concepts such as:
 
 - Functions
-- Lists and dictionaries
+- Lists
 - Loops and conditionals
 - File handling
 - Basic user input validation
