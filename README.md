@@ -14,7 +14,6 @@ The goal of this project is to practice core Python concepts such as:
 
 - Add new tasks
 - View all tasks
-- Mark tasks as completed
 - Delete tasks
 - Persistent storage using a text file
 

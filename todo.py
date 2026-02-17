@@ -2,8 +2,6 @@
 
 import os
 
-tasks_final = []
-
 print("=== TO-DO LIST APP ===")
 
 # Implementing user input validation
@@ -44,7 +42,7 @@ if user_choice == 1:
         print("\nTasks created successfully!\n\n===== YOUR TASKS =====\n")
         for task in range(len(saved_data)):
           bullet = task + 1
-          print(f"{bullet}.", saved_data[task].strip().title())
+          print(f"{bullet}.", saved_data[task].strip().capitalize())
         print("\n======================\n")
 
     elif intent_create == "no" or intent_create == "n":
@@ -60,7 +58,7 @@ if user_choice == 1:
 
 elif user_choice == 2:
   if not os.path.exists("file.txt"):
-    print("\nFile does not exist...\n\nNo Tasks to view...\n\nProgram end\n")
+    print("\nFile does not exist...\n\nNo Tasks to view...\nCreate a New Tasks first...\n\nProgram end\n")
   
   else:
     with open("file.txt", "r") as file:
@@ -78,7 +76,7 @@ elif user_choice == 2:
       print("\nTasks opened successfully!\n\n===== YOUR TASKS =====\n")
       for task in range(len(saved_data)):
         bullet = task + 1
-        print(f"{bullet}.", saved_data[task].strip().title())
+        print(f"{bullet}.", saved_data[task].strip().capitalize())
       print("\n======================\n")
 
 # (Add Task)
@@ -100,7 +98,7 @@ elif user_choice == 3:
         
       else:
         with open("file.txt", "a") as file:
-          file.write(f",{new_intake}")
+          file.write(f"{new_intake},".strip(","))
         
         with open("file.txt", "r") as file:
           data = file.read()
@@ -109,7 +107,7 @@ elif user_choice == 3:
         print("\nTasks added successfully!\n\n===== YOUR TASKS =====\n")
         for task in range(len(saved_data)):
           bullet = task + 1
-          print(f"{bullet}.", saved_data[task].strip().title())
+          print(f"{bullet}.", saved_data[task].strip().capitalize())
         print("\n======================\n")
     
     except ValueError:
@@ -156,7 +154,7 @@ elif user_choice == 4:
      
       for task in range(len(saved_data)):
         bullet = task + 1
-        print(f"{bullet}.", saved_data[task].strip().title())
+        print(f"{bullet}.", saved_data[task].strip().capitalize())
       print("\n===========================\n")
       
       get_index = int(input("Enter the #id of the task you wish to delete\n\n==> "))
@@ -170,16 +168,13 @@ elif user_choice == 4:
         saved_data = data.split(",")
 
         index = get_index - 1
-        tasks = saved_data[:index] + saved_data[index+1:]
-        notice = saved_data.pop(index).strip()
-
-        # saved_data.remove(saved_data[get_index])
+        saved_data.pop(index).strip()
 
         stringify_saved_data = ",".join(saved_data)
 
         with open("file.txt", "w") as file:
           file.write(stringify_saved_data)
-        print(f"\nTASK:'{notice.upper()}' has been deleted successfully\n\nUpdating tasks...")
+        print(f"\nTASK:'{saved_data.pop(index).strip().capitalize()}' has been deleted successfully\nUpdating tasks...")
 
         with open("file.txt", "r") as file:
           data = file.read()
@@ -188,7 +183,7 @@ elif user_choice == 4:
         print("\n===== YOUR TASKS =====\n")
         for task in range(len(saved_data)):
           bullet = task + 1
-          print(f"{bullet}.", saved_data[task].strip().title())
+          print(f"{bullet}.", saved_data[task].strip().capitalize())
         print("\n======================\n")
 
       elif validate_option == "no" or validate_option == "n":
