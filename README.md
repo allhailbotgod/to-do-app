@@ -12,6 +12,7 @@ The goal of this project is to practice core Python concepts such as:
 
 ## Features
 
+- Create new tasks
 - Add new tasks
 - View all tasks
 - Delete tasks
